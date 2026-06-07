@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHIELD-net | Sistema de Defensa de Datos Inteligente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0f1e 0%, #0f172a 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* Header / Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-25%, -25%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-25%, -25%) scale(1.1); opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid #8b5cf6;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #c4b5fd, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid #8b5cf6;
+            color: #c4b5fd;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Secciones */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Tarjetas de objetivos */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #8b5cf6;
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #c4b5fd;
+        }
+
+        .card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        /* Tabla de requisitos */
+        .table-container {
+            overflow-x: auto;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        th {
+            color: #c4b5fd;
+            font-weight: 600;
+        }
+
+        .priority-high {
+            color: #f87171;
+        }
+        .priority-mid {
+            color: #fbbf24;
+        }
+
+        /* Grid de justificaciones */
+        .justification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .just-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(30, 41, 59, 0.5));
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border-left: 4px solid #8b5cf6;
+        }
+
+        .just-card h3 {
+            color: #a78bfa;
+            margin-bottom: 1rem;
+        }
+
+        /* Diagrama simplificado */
+        .diagram {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            font-family: monospace;
+            border: 1px solid #334155;
+        }
+
+        .layer {
+            background: #1e293b;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid #8b5cf6;
+        }
+
+        /* Footer */
+        footer {
+            background: #020617;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid #334155;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.75rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">
+                    🔐 Zero Trust Architecture | 🧠 IA XGBoost | 🚀 SPA Protocol
+                </div>
+                <h1>SHIELD-net</h1>
+                <p class="tagline">
+                    Sistema de Defensa de Datos Inteligente<br>
+                    Detección automática de intrusos + ocultamiento de servicios críticos
+                </p>
+                <div class="btn-group">
+                    <a href="#objetivos" class="btn btn-primary">📖 Conocer más</a>
+                    <a href="#requisitos" class="btn btn-outline">⚙️ Requisitos Técnicos</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Objetivos -->
+        <section id="objetivos">
+            <div class="container">
+                <h2 class="section-title">🎯 Objetivos del Proyecto</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">🛡️</div>
+                        <h3>Objetivo General</h3>
+                        <p>Desarrollar una plataforma de seguridad integral que automatice la detección de intrusos y oculte servicios críticos en routers, mediante aprendizaje automático y protocolo SPA.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🔍</div>
+                        <h3>OE-01</h3>
+                        <p>Diagnosticar vulnerabilidades actuales en accesos remotos de redes empresariales basadas en RouterOS.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🏗️</div>
+                        <h3>OE-02</h3>
+                        <p>Implementar arquitectura de microservicios que orqueste validación de identidad y apertura dinámica de puertos.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🤖</div>
+                        <h3>OE-03</h3>
+                        <p>Entrenar modelo de clasificación XGBoost para detección de anomalías en tráfico de red en tiempo real.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🧪</div>
+                        <h3>OE-04</h3>
+                        <p>Validar eficacia del sistema mediante pruebas de penetración (Pentesting) en entorno SHIELD-net.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Justificaciones -->
+        <section style="background: rgba(0, 0, 0, 0.2);">
+            <div class="container">
+                <h2 class="section-title">💡 Justificaciones</h2>
+                <div class="justification-grid">
+                    <div class="just-card">
+                        <h3>💰 Económica</h3>
+                        <p>Reduce costos operativos al eliminar licencias costosas de NGFW (Fortinet, Cisco). Ahorro del 70% del tiempo de administración manual de logs y bloqueo de IPs.</p>
+                    </div>
+                    <div class="just-card">
+                        <h3>🎓 Académica</h3>
+                        <p>Integra el marco SCRUM con CRISP-DM. Demuestra viabilidad de aplicar modelos de machine learning en hardware de red de bajo costo.</p>
+                    </div>
+                    <div class="just-card">
+                        <h3>👥 Social</h3>
+                        <p>Protege la privacidad y datos de ciudadanos en PYMES, evitando filtraciones que derivan en suplantación de identidad o fraudes financieros.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Requisitos -->
+        <section id="requisitos">
+            <div class="container">
+                <h2 class="section-title">📋 Requisitos del Sistema</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tipo</th>
+                                <th>Descripción</th>
+                                <th>Prioridad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>RF-01</td><td>Funcional</td><td>Validar paquete SPA antes de modificar firewall</td><td class="priority-high">MUST</td></tr>
+                            <tr><td>RF-02</td><td>Funcional</td><td>Establecer túneles WireGuard automáticamente</td><td class="priority-high">MUST</td></tr>
+                            <tr><td>RF-03</td><td>Funcional</td><td>Clasificar tráfico por IA cada 60 segundos</td><td class="priority-mid">SHOULD</td></tr>
+                            <tr><td>RF-04</td><td>Funcional</td><td>Baneo de IPs anómalas en menos de 1 segundo</td><td class="priority-high">MUST</td></tr>
+                            <tr><td>RF-05</td><td>Funcional</td><td>Comunicación API-SSL con MikroTik</td><td class="priority-high">MUST</td></tr>
+                            <tr><td>NF-01</td><td>No Funcional</td><td>Arquitectura basada en microservicios contenerizados (Docker)</td><td class="priority-high">MUST</td></tr>
+                            <tr><td>NF-02</td><td>No Funcional</td><td>Motor XGBoost para alta precisión en detección</td><td class="priority-mid">SHOULD</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Arquitectura -->
+        <section style="background: rgba(0, 0, 0, 0.2);">
+            <div class="container">
+                <h2 class="section-title">🏛️ Arquitectura en Capas</h2>
+                <div class="diagram">
+                    <div class="layer">
+                        <strong>🖥️ Capa de Presentación</strong><br>
+                        CLI Admin | API REST (Swagger)
+                    </div>
+                    <div class="layer">
+                        <strong>⚙️ Capa de Negocio (Microservicios)</strong><br>
+                        Orquestador SPA | Motor IA XGBoost | API Gateway | Logger + Baneos
+                    </div>
+                    <div class="layer">
+                        <strong>💾 Capa de Datos</strong><br>
+                        PostgreSQL | MikroTik RouterOS
+                    </div>
+                    <div class="layer">
+                        <strong>🔧 Capa de Infraestructura</strong><br>
+                        Docker Engine | WireGuard Tunnels
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modelo de Datos -->
+        <section>
+            <div class="container">
+                <h2 class="section-title">🗄️ Modelo de Datos (DER)</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Entidad</th>
+                                <th>Atributos</th>
+                                <th>PK</th>
+                                <th>FK</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Usuario</td><td>id_u, token_spa, public_key</td><td>id_u</td><td>-</td></tr>
+                            <tr><td>Logs_Trafico</td><td>id_log, ip_src, score_ia, id_router</td><td>id_log</td><td>id_router</td></tr>
+                            <tr><td>Baneos</td><td>id_b, ip_masked, id_log</td><td>id_b</td><td>id_log</td></tr>
+                            <tr><td>Router</td><td>id_router, nombre, ip_gateway</td><td>id_router</td><td>-</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Taxonomía -->
+        <section style="background: rgba(0, 0, 0, 0.2);">
+            <div class="container">
+                <h2 class="section-title">📚 Taxonomía del Sistema</h2>
+                <div class="justification-grid">
+                    <div class="just-card">
+                        <h3>📖 Según Pressman (2010)</h3>
+                        <p>Sistema de Software de Infraestructura/Seguridad con componentes de Inteligencia Artificial.</p>
+                    </div>
+                    <div class="just-card">
+                        <h3>🏗️ Según Sommerville (2011)</h3>
+                        <p>Middleware que controla otros programas (firewall del router) y utiliza árboles de decisión.</p>
+                    </div>
+                    <div class="just-card">
+                        <h3>🔐 Según NIST 800-207</h3>
+                        <p>Arquitectura Zero Trust: puertos cerrados por defecto, validación explícita de cada acceso.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>📌 Universidad Privada Franz Tamayo - Facultad de Ingeniería de Sistemas</p>
+            <p>👨‍💻 Autor: Pablo Santos Maldonado Gonzales | 📅 2026</p>
+            <p style="margin-top: 1rem; font-size: 0.875rem; color: #64748b;">
+                SHIELD-net - Sistema de Defensa de Datos Inteligente<br>
+                Basado en Zero Trust Architecture + XGBoost + SPA Protocol
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
